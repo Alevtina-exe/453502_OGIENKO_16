@@ -9,11 +9,12 @@ Date: 25.03.2026.
 import random
 from typing import List
 
-def gen_random_sequence(n: int, low: int = -10, high: int = 10) -> List[float]:
+def gen_random_sequence(n: int, low: int = -10, high: int = 10):
     """
-    Generate a list of n random floats (or ints) in [low, high].
+    Generate n random floats in [low, high] using a generator.
     """
-    return [random.uniform(low, high) for _ in range(n)]
+    for _ in range(n):
+        yield random.uniform(low, high)
 
 def input_sequence(n: int) -> List[float]:
     """
