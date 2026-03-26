@@ -4,7 +4,7 @@ Variant 16 tasks:
 a) find index of element with maximum absolute value;
 b) sum elements after first positive element.
 Author: Ogienko D.D.
-Version: 1.6.
+Version: 1.7.
 Date: 25.03.2026.
 """
 
@@ -69,7 +69,7 @@ def process_list_from_generated(seq: List[float]) -> dict:
 @repeatable("Do you want to repeat Task 5? (y/n): ")
 def run_task5(gen_func: Optional[Callable[[int, float, float], List[float]]] = None):
     """
-    Interactive runner for Task 5.
+    Runner for Task 5.
     Asks for number of elements, then whether to input data or generate it,
     then calls the appropriate processing function.
     """
@@ -95,18 +95,32 @@ def run_task5(gen_func: Optional[Callable[[int, float, float], List[float]]] = N
                 return {}
 
         if choice in ("g", "gen", "generate"):
-            while True:
-                try:
-                    low_s = input("Enter lower bound (default -10): ").strip()
-                    high_s = input("Enter upper bound (default 10): ").strip()
-                    low = float(low_s) if low_s else -10.0
-                    high = float(high_s) if high_s else 10.0
-                    if low > high:
-                        print("Lower bound must be <= upper bound.")
+            low = None
+            high = None
+
+            while low is None or high is None:
+                if low is None:
+                    try:
+                        low_str = input("Enter lower bound (default -10): ").strip()
+                        low = float(low_str) if low_str else -10.0
+                    except ValueError:
+                        print("Invalid lower bound, try again.")
+                        low = None
                         continue
-                    break
-                except ValueError:
-                    print("Invalid bound, try again.")
+
+                if high is None:
+                    try:
+                        high_str = input("Enter upper bound (default 10): ").strip()
+                        high = float(high_str) if high_str else 10.0
+                    except ValueError:
+                        print("Invalid upper bound, try again.")
+                        high = None
+                        continue
+
+                if  low > high:
+                    print("Lower bound must be <= upper bound.")
+                    low = None
+                    high = None
 
             try:
                 generator = gen_func if gen_func is not None else gen_random_sequence
