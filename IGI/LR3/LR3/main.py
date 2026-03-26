@@ -35,7 +35,6 @@ def main():
         choice = input("Choose an option: ").strip()
 
         if choice == '0':
-            print("Goodbye.")
             break
 
         elif choice == '1':
