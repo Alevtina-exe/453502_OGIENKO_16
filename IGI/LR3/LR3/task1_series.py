@@ -10,7 +10,7 @@ Date: 25.03.2026.
 import math
 from decorators import repeatable
 
-@repeatable("Do you want to repeat Task 1? (y/n): ")
+@repeatable
 def series_sin(x: float = None, eps: float = None, max_iter: int = 500):
     """
     Compute sin(x) using power series:

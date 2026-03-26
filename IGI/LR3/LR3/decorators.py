@@ -6,19 +6,16 @@ Version: 1.2.
 Date: 25.03.2026.
 """
 
-def repeatable(prompt_message="Run again? (y/n): "):
+def repeatable(func):
     """
     Decorator factory to allow repeating an interactive function until user declines.
     """
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            while True:
-                result = func(*args, **kwargs)
-                ans = input(prompt_message).strip().lower()
-                if ans not in ('y', 'yes'):
-                    return result
+    def wrapper(*args, **kwargs):
+        while True:
+            result = func(*args, **kwargs)
+            ans = input("Do you want to repeat the Task? (y/n)").strip().lower()
+            if ans not in ('y', 'yes'):
+                return result
+    return wrapper
 
-        return wrapper
-
-    return decorator
 

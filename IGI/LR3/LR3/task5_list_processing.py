@@ -66,7 +66,7 @@ def process_list_from_generated(seq: List[float]) -> dict:
         print(f"Error: {e}")
         return {}
 
-@repeatable("Do you want to repeat Task 5? (y/n): ")
+@repeatable
 def run_task5(gen_func: Optional[Callable[[int, float, float], List[float]]] = None):
     """
     Runner for Task 5.

@@ -9,7 +9,7 @@ Date: 25.03.2026.
 from decorators import repeatable
 import string
 
-@repeatable("Analyze another string? (y/n): ")
+@repeatable
 def count_punctuation():
     """
     Reads a line and counts punctuation characters.

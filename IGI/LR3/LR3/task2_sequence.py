@@ -11,7 +11,7 @@ from decorators import repeatable
 def is_natural(n: int) -> bool:
     return n > 0 and float(n).is_integer()
 
-@repeatable("Do you want to repeat Task 2? (y/n): ")
+@repeatable
 def count_odd_naturals():
     """
     Reads integers until 0 is entered. Counts odd natural numbers.
