@@ -12,7 +12,6 @@ from task3_text import count_punctuation
 from task4_string_analyzer import analyze_string
 from task5_list_processing import run_task5
 
-
 def print_menu():
     """
     Print the interactive menu for main program.
@@ -24,7 +23,6 @@ def print_menu():
     print("4. Task 4: Analyze fixed sentence (variant tasks)")
     print("5. Task 5: List processing (max-by-abs index and sum after first positive)")
     print("0. Exit")
-
 
 def main():
     """

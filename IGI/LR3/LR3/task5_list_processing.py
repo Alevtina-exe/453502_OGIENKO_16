@@ -5,13 +5,12 @@ a) find index of element with maximum absolute value;
 b) sum elements after first positive element.
 Author: Ogienko D.D.
 Version: 1.6.
-Date: 2026-03-26.
+Date: 25.03.2026.
 """
 
 from typing import List, Optional, Callable
 from decorators import repeatable
 from init_seq import gen_random_sequence, input_sequence
-
 
 def find_max_abs_index(seq: List[float]) -> int:
     """
@@ -20,7 +19,6 @@ def find_max_abs_index(seq: List[float]) -> int:
     if not seq:
         raise ValueError("Sequence is empty.")
     return max(range(len(seq)), key=lambda i: abs(seq[i]))
-
 
 def sum_after_first_positive(seq: List[float]) -> float:
     """
@@ -31,7 +29,6 @@ def sum_after_first_positive(seq: List[float]) -> float:
             return sum(seq[i+1:])
     return 0.0
 
-
 def _compute_results(seq: List[float]) -> dict:
     """
     Compute and return results: index of max-by-abs and sum after first positive.
@@ -39,7 +36,6 @@ def _compute_results(seq: List[float]) -> dict:
     idx = find_max_abs_index(seq)
     s = sum_after_first_positive(seq)
     return {"max_abs_index": idx, "sum_after_first_positive": s}
-
 
 def process_list_from_values(seq: List[float]) -> dict:
     """
