@@ -1,0 +1,79 @@
+services:
+  # MySQL database
+  db:
+    image: mysql:8.0
+    container_name: registration_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: registration_db
+      MYSQL_USER: registration_user
+      MYSQL_PASSWORD: registration_password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./SqlQuery.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Django backend
+  backend:
+    build: ./backend
+    container_name: registration_backend
+    restart: unless-stopped
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+      - backend_static:/app/static
+      - backend_media:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=registration_db
+      - DB_USER=registration_user
+      - DB_PASSWORD=registration_password
+      - DB_PORT=3306
+      - DEBUG=1
+    networks:
+      - app_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # React frontend
+  frontend:
+    build: ./frontend
+    container_name: registration_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - app_network
+    depends_on:
+      - backend
+
+# Определение сетей
+networks:
+  app_network:
+    driver: bridge
+    name: registration_network
+
+# Определение томов для сохранения данных
+volumes:
+  mysql_data:
+    name: registration_mysql_data
+  backend_static:
+    name: registration_backend_static
+  backend_media:
+    name: registration_backend_media
