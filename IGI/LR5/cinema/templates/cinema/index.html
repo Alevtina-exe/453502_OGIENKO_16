@@ -1,6 +1,6 @@
 {% extends 'cinema/base.html' %}
 {% block content %}
-<h2>Добро пожаловать в наш Кинотеатр!</h2>
+<h2>Добро пожаловать кинотеатр "Grand Cinema"!</h2>
 <p>Мы автоматизировали систему управления расписанием и продажей билетов.</p>
 <hr>
 
@@ -12,16 +12,28 @@
 </div>
 
 {% if latest_news %}
-    <h4>{{ latest_news.title }}</h4>
-    <p><em>Опубликовано: {{ latest_news.published_date|date:"d/m/Y H:i" }}</em></p>
-    <p>{{ latest_news.short_description }}</p>
+    <div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 15px;">
 
-    {% if user.is_authenticated and user.is_superuser or user.staff_profile %}
-        <div style="margin-top: 15px;">
-            <a href="{% url 'news_update' latest_news.id %}" style="color: #ffc107; margin-right: 15px; text-decoration: none; font-weight: bold;">Редактировать</a>
-            <a href="{% url 'news_delete' latest_news.id %}" style="color: #dc3545; text-decoration: none; font-weight: bold;">Удалить статью</a>
+        {% if latest_news.image %}
+            <div style="flex-shrink: 0;">
+                <img src="{{ latest_news.image.url }}" alt="{{ latest_news.title }}"
+                     style="width: 200px; height: 150px; object-fit: cover; border-radius: 8px;">
+            </div>
+        {% endif %}
+
+        <div>
+            <h4 style="margin-top: 0;">{{ latest_news.title }}</h4>
+            <p style="font-size: 0.9em; color: #666;"><em>Опубликовано: {{ latest_news.published_date|date:"d/m/Y H:i" }}</em></p>
+            <p>{{ latest_news.short_description }}</p>
+
+            {% if user.is_authenticated and user.is_superuser or user.staff_profile %}
+                <div style="margin-top: 10px;">
+                    <a href="{% url 'news_update' latest_news.id %}" style="color: #ffc107; margin-right: 15px; text-decoration: none; font-weight: bold;">Редактировать</a>
+                    <a href="{% url 'news_delete' latest_news.id %}" style="color: #dc3545; text-decoration: none; font-weight: bold;">Удалить статью</a>
+                </div>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
 {% else %}
     <p>Новостей пока нет.</p>
 {% endif %}

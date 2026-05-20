@@ -27,7 +27,7 @@
                 <select id="genre" name="genre" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
                     <option value="">Все жанры</option>
                     {% for g in all_genres %}
-                        <option value="{{ g.id }}" {% if request.GET.genre == g.id|stringformat:"i" %}selected{% endif %}>{{ g.name }}</option>
+                        <option value="{{ g.id }}" {% if request.GET.genre == g.id|slugify %}selected{% endif %}>{{ g.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -37,7 +37,7 @@
                 <select id="country" name="country" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
                     <option value="">Все страны</option>
                     {% for c in all_countries %}
-                        <option value="{{ c.id }}" {% if request.GET.country == c.id|stringformat:"i" %}selected{% endif %}>{{ c.name }}</option>
+                        <option value="{{ c.id }}" {% if request.GET.country == c.id|slugify %}selected{% endif %}>{{ c.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -45,18 +45,18 @@
             <div style="width: 200px;">
                 <label for="ordering" style="display: block; font-size: 13px; font-weight: bold; color: #555; margin-bottom: 6px;">Сортировка</label>
                 <select id="ordering" name="ordering" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: white;">
-                    <option value="title_ru" {% if request.GET.ordering == 'title_ru' %}selected{% endif %}>По алфавиту (А-Я)</option>
-                    <option value="-title_ru" {% if request.GET.ordering == '-title_ru' %}selected{% endif %}>По алфавиту (Я-А)</option>
-                    <option value="-rating" {% if request.GET.ordering == '-rating' %}selected{% endif %}>Высокий локальный рейтинг</option>
-                    <option value="-imdb_rating" {% if request.GET.ordering == '-imdb_rating' %}selected{% endif %}>Высокий рейтинг IMDb</option>
-                    <option value="-release_year" {% if request.GET.ordering == '-release_year' %}selected{% endif %}>Сначала новые (по году)</option>
-                    <option value="duration" {% if request.GET.ordering == 'duration' %}selected{% endif %}>Короткие фильмы</option>
+                    <option value="title_ru" {% if sort_by == 'title_ru' %}selected{% endif %}>По алфавиту (А-Я)</option>
+                    <option value="-title_ru" {% if sort_by == '-title_ru' %}selected{% endif %}>По алфавиту (Я-А)</option>
+                    <option value="-rating" {% if sort_by == '-rating' %}selected{% endif %}>Высокий локальный рейтинг</option>
+                    <option value="-imdb_rating" {% if sort_by == '-imdb_rating' %}selected{% endif %}>Высокий рейтинг IMDb</option>
+                    <option value="-release_year" {% if sort_by == '-release_year' %}selected{% endif %}>Сначала новые (по году)</option>
+                    <option value="duration" {% if sort_by == 'duration' %}selected{% endif %}>Короткие фильмы</option>
                 </select>
             </div>
 
             <div style="display: flex; gap: 10px;">
                 <button type="submit" style="background: #007bff; color: white; border: none; padding: 9px 18px; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer;">Применить</button>
-                <a href="{% url 'movie_list' %}" style="background: #6c757d; color: white; text-decoration: none; padding: 9px 18px; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block;">Сбросить</a>
+                <a href="{% url 'movies_list' %}" style="background: #6c757d; color: white; text-decoration: none; padding: 9px 18px; font-size: 14px; font-weight: bold; border-radius: 4px; display: inline-block;">Сбросить</a>
             </div>
 
         </form>
